@@ -1,1 +1,58 @@
-//
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+//font-awesome
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+
+body {
+	font-size: 1rem;
+}
+
+.content-holder {
+	box-shadow: 0px 0px 8px rgba(0,0,0,0.7);
+}
+
+.navbar {
+	background-color: #292929;
+}
+
+.nav-item .nav-link {
+	color: #ffdc5d;
+}
+
+.btn-head-search {
+	color: #292929;
+    background-color: #ffdc5d;
+    border-color: #ffdc5d;
+}
+
+.carousel-caption {
+	position: absolute;
+	top: 40px;
+}
+
+.carousel-caption h5 {
+	font-weight: bold;
+}
+
+.navbar-center input[type=text] {
+	border-radius: 15px;
+	border: none;
+	width: 300px;
+	margin-right: 10px;
+}
+
+#casts-holder {
+	margin-bottom: 20px;
+}
+
+#casts-holder input[type=text] {
+	margin-right: 10px;
+	margin-bottom: 10px;
+}

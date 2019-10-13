@@ -13,7 +13,10 @@ class StoreSerieRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        if(auth()->check() && auth()->user()->isAdmin()){
+            return true;    
+        }
+        return false;
     }
 
     /**

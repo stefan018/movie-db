@@ -13,7 +13,10 @@ class StoreMovieRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+       if(auth()->check() && auth()->user()->isAdmin()){
+            return true;    
+        }
+        return false;
     }
 
     /**
@@ -41,7 +44,12 @@ class StoreMovieRequest extends FormRequest
                 'required',
                 'date'
             ],
-            'cover' => 'required'//Add image validation
+            'cover' => [
+                'image',
+                'mimes:jpeg,png,jpg,gif,svg',
+                'max:2048',
+                'nullable'
+            ]
         ];
     }
 }

@@ -20,7 +20,7 @@ class CreateMoviesTable extends Migration
             $table->smallInteger('duration');
             $table->float('rating', 2, 1)->nullable();
             $table->date('release_date');
-            $table->string('cover', 100);
+            $table->string('cover', 100)->nullable();
             $table->timestamps();
         });
     }

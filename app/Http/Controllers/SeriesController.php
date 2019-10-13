@@ -8,15 +8,14 @@ use App\Serie;
 
 class SeriesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   public function __construct()
+   {
+        $this->middleware(['admin', 'auth'])->except('index', 'show');
+   }
     public function index()
     {
         $series = Serie::all();
-        return view('admin.series.index', compact('series'));
+        return view('series.index', compact('series'));
     }
 
     /**
@@ -27,7 +26,7 @@ class SeriesController extends Controller
     public function create()
     {
         $genres = \App\Genre::all();
-        return view('admin.series.create', compact('genres'));
+        return view('series.create', compact('genres'));
     }
 
     /**
@@ -39,6 +38,11 @@ class SeriesController extends Controller
     public function store(StoreSerieRequest $request)
     {
         $attributes = $request->except('genre');
+        if($request->hasFile('cover')){
+            $attributes['cover'] = time() . '.' 
+                . $request->cover->getClientOriginalExtension();
+            $request->cover->move(public_path('/images/uploads'), $attributes['cover']);
+        }
         Serie::create($attributes)->genres()->attach($request->genre);
         return redirect()->route('series.index');
     }
@@ -51,7 +55,8 @@ class SeriesController extends Controller
      */
     public function show($id)
     {
-        
+        $serie = Serie::findOrFail($id);
+        return view('series.show', compact('serie'));
     }
 
     /**
@@ -64,7 +69,7 @@ class SeriesController extends Controller
     {
         $serie = Serie::findOrFail($id);
         $genres = \App\Genre::all();
-        return view('admin.series.edit', compact('serie', 'genres'));
+        return view('series.edit', compact('serie', 'genres'));
     }
 
     /**
@@ -77,7 +82,14 @@ class SeriesController extends Controller
     public function update(StoreSerieRequest $request, $id)
     {
         $serie = Serie::findOrFail($id);
-        $serie->update($request->except('genre'));
+        $attributes = $request->except('genre');
+        if($request->hasFile('cover')){
+            $attributes['cover'] = time() . '.' 
+                . $request->cover->getClientOriginalExtension();
+            $request->cover->move(public_path('/images/uploads'), $attributes['cover']);
+            @unlink(public_path('/images/uploads/') . $serie->cover);
+        }
+        $serie->update($attributes);
         $serie->genres()->sync($request->genre);
         return redirect()->back();
     }
@@ -92,6 +104,7 @@ class SeriesController extends Controller
     {
         $serie = Serie::find($id);
         $serie->genres()->detach();
+        @unlink(public_path('/images/uploads/') . $serie->cover);
         $serie->delete();
         return redirect()->route('series.index');
     }

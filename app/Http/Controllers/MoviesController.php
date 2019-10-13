@@ -5,18 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Movie;
 use App\Http\Requests\StoreMovieRequest;
+use Illuminate\Filesystem\Filesystem;
 
 class MoviesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['admin', 'auth'])->except('index', 'show');
+    }
+
+
     public function index()
     {
         $movies = Movie::all();
-        return view('admin.movies.index', compact('movies'));
+        return view('movies.index', compact('movies'));
     }
 
     /**
@@ -27,7 +29,7 @@ class MoviesController extends Controller
     public function create()
     {
         $genres = \App\Genre::all();
-        return view('admin.movies.create', compact('genres'));
+        return view('movies.create', compact('genres'));
     }
 
     /**
@@ -38,7 +40,12 @@ class MoviesController extends Controller
      */
     public function store(StoreMovieRequest $request)
     {
+
         $attributes = $request->except('genre');
+        if($request->hasFile('cover')){
+        $attributes['cover'] = time() . '.' . $request->cover->getClientOriginalExtension();
+        $request->cover->move(public_path('/images/uploads'), $attributes['cover']);
+        }
         Movie::create($attributes)->genres()->attach($request->genre);
         return redirect()->route('movies.index');
     }
@@ -49,10 +56,9 @@ class MoviesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Movie $movie)
     {   
-        $movie = Movie::findOrFail($id);
-        return view('admin.movies.show', compact('movie'));
+        return view('movies.show', compact('movie'));
     }
 
     /**
@@ -63,9 +69,10 @@ class MoviesController extends Controller
      */
     public function edit($id)
     {
+
         $movie = Movie::findOrFail($id);
         $genres = \App\Genre::all();
-        return view('admin.movies.edit', compact('movie', 'genres'));
+        return view('movies.edit', compact('movie', 'genres'));
     }
 
     /**
@@ -77,9 +84,19 @@ class MoviesController extends Controller
      */
     public function update(StoreMovieRequest $request, $id)
     {
+
         $movie = Movie::findOrFail($id);
-        $movie->update($request->except('genre'));
+        $attributes = $request->except('genre');
+        
+        if($request->hasFile('cover')){
+            $attributes['cover'] = time() . '.' . $request->cover->getClientOriginalExtension();
+            $request->cover->move(public_path('/images/uploads'), $attributes['cover']);
+            @unlink(public_path('/images/uploads/') . $movie->cover);
+        }
+
+        $movie->update($attributes);
         $movie->genres()->sync($request->genre);
+
         return redirect()->back();
     }
 
@@ -91,8 +108,10 @@ class MoviesController extends Controller
      */
     public function destroy($id)
     {
+
         $movie = Movie::findOrFail($id);
         $movie->genres()->detach();
+        @unlink(public_path('images/uploads/') . $movie->cover);
         $movie->delete();
         return redirect()->route('movies.index');
     }

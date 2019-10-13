@@ -12,8 +12,19 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 Route::resource('/movies', 'MoviesController');
 
 Route::resource('/series', 'SeriesController');
+
+Route::resource('/genres', 'GenresController')->middleware(['admin', 'auth']);
+
+Route::resource('/cast', 'CastController');
+
+Route::resource('/users', 'UsersController')->middleware(['admin', 'auth']);
+
+Auth::routes();
+
+Route::get('/search/general', 'SearchController@search')->name('search');
+Route::get('/home', 'HomeController@index')->name('home');
