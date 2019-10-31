@@ -17,7 +17,7 @@ class MoviesController extends Controller
 
     public function index()
     {
-        $movies = Movie::all();
+        $movies = Movie::paginate(4);
         return view('movies.index', compact('movies'));
     }
 
@@ -40,13 +40,27 @@ class MoviesController extends Controller
      */
     public function store(StoreMovieRequest $request)
     {
-
         $attributes = $request->except('genre');
+       
         if($request->hasFile('cover')){
-        $attributes['cover'] = time() . '.' . $request->cover->getClientOriginalExtension();
+        $attributes['cover'] = time() 
+            . '.' . $request->cover->getClientOriginalExtension();
         $request->cover->move(public_path('/images/uploads'), $attributes['cover']);
         }
-        Movie::create($attributes)->genres()->attach($request->genre);
+        
+        $movie = Movie::create($attributes);
+        $movie->genres()->attach($request->genre);
+        
+        if($request->cast){
+
+            foreach($request->cast as $celeb){
+                
+                if($movieCeleb = \App\Cast::where('name', $celeb)->first()){
+                    $movie->cast()->attach($movieCeleb);
+                }
+            }
+            
+        }
         return redirect()->route('movies.index');
     }
 
@@ -93,7 +107,17 @@ class MoviesController extends Controller
             $request->cover->move(public_path('/images/uploads'), $attributes['cover']);
             @unlink(public_path('/images/uploads/') . $movie->cover);
         }
-
+        $movieCast = array();
+        if($request->cast){
+            foreach($request->cast as $celeb){             
+                if($movieCeleb = \App\Cast::where('name', $celeb)->first()){
+                   $movieCast[] = $movieCeleb->id;
+                }
+            }
+        }
+        if($movieCast){
+            $movie->cast()->sync($movieCast);
+        }
         $movie->update($attributes);
         $movie->genres()->sync($request->genre);
 

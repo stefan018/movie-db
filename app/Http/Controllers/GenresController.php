@@ -45,4 +45,20 @@ class GenresController extends Controller
     	$genre->delete();
     	return redirect()->route('genres.index');
     }
+
+    public function showMovies($id)
+    {
+        $genre = Genre::findOrFail($id);
+        $movies = $genre->movies()->paginate(5);
+        
+        return view('genres.movies', compact('movies', 'genre'));
+    }
+
+    public function showSeries($id)
+    {
+        $genre = Genre::findOrFail($id);
+        $series = $genre->series()->paginate(5);
+
+        return view('genres.series', compact('series', 'genre'));
+    }
 }

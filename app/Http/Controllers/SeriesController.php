@@ -14,7 +14,7 @@ class SeriesController extends Controller
    }
     public function index()
     {
-        $series = Serie::all();
+        $series = Serie::paginate(4);
         return view('series.index', compact('series'));
     }
 
@@ -43,7 +43,16 @@ class SeriesController extends Controller
                 . $request->cover->getClientOriginalExtension();
             $request->cover->move(public_path('/images/uploads'), $attributes['cover']);
         }
-        Serie::create($attributes)->genres()->attach($request->genre);
+        $serie = Serie::create($attributes);
+        $serie->genres()->attach($request->genre);
+
+        if($request->cast){
+            foreach($request->cast as $celeb){
+                if($serieCeleb = App\Cast::where('name', $celeb)->first()){
+                    $serie->cast()->attach($serieCeleb);
+                }
+            }
+        }
         return redirect()->route('series.index');
     }
 
@@ -88,6 +97,17 @@ class SeriesController extends Controller
                 . $request->cover->getClientOriginalExtension();
             $request->cover->move(public_path('/images/uploads'), $attributes['cover']);
             @unlink(public_path('/images/uploads/') . $serie->cover);
+        }
+        $serieCast = array();
+        if($request->cast){
+            foreach($request->cast as $celeb){             
+                if($serieCeleb = \App\Cast::where('name', $celeb)->first()){
+                   $serieCast[] = $serieCeleb->id;
+                }
+            }
+        }
+        if($serieCast){
+            $serie->cast()->sync($serieCast);
         }
         $serie->update($attributes);
         $serie->genres()->sync($request->genre);

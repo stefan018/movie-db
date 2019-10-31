@@ -34,4 +34,51 @@
 	</div>
 </div>
 <!-- Closing row for slider -->
+<div class="upcoming-section">
+ <h3>Upcoming Movies:</h3>
+<div class="row">
+  @foreach($movies as $movie)
+  <div class="col">
+    <p class="title"><a href="{{route('movies.show', $movie->id)}}">{{$movie->title}}</a></p>
+    <div class="cover-holder">
+      <img src="{{$movie->cover}}">
+    </div>
+    
+    <div class="info-holder">
+      <div class="genre">
+        @foreach($movie->genres as $genre)
+          <span><a href="{{route('genres.movies', $genre->id)}}">{{$genre->name}}</a></span>
+        @endforeach
+      </div>
+      <span class="release-date">Release Date:{{$movie->release_date}}</span>
+      
+    </div>
+    <p>{{Str::limit($movie->description, 150, '...')}}</p>
+  </div>
+  @endforeach
+</div>
+
+<h2>Upcoming Series</h2>
+<div class="row">
+  @foreach($series as $serie)
+    <div class="col">
+      <p class="title"><a href="{{route('series.show', $serie->id)}}">{{$serie->title}}</a></p>
+      <div class="cover-holder">
+         <img src="{{$serie->cover}}">
+      </div>
+
+      <div class="info-holder">
+        <div class="genre">
+           @foreach($serie->genres as $genre)
+            <span><a href="{{route('genres.series', $genre->id)}}">{{$genre->name}}</a></span>
+          @endforeach
+        </div>
+      </div>
+      <p>{{Str::limit($serie->description, 150, '...')}}</p>
+    </div>
+  @endforeach
+</div>
+</div>
+
+
 @endsection

@@ -29,7 +29,7 @@ class StoreCastRequest extends FormRequest
         return [
             'name' => ['required', 'min:3', 'max:199', 'string'],
             'gender' => 'required',
-            'biography' => ['required', 'min:10', 'max:999', 'string'],
+            'biography' => ['required', 'min:10', 'max:1999', 'string'],
             'birth_date' => 'date',
             'birth_place' => ['min:3','max:99', 'string']
         ];

@@ -88,9 +88,13 @@
 <main>
             @yield('content')
 </main>
+<footer>
+    All rights reserved &copy; {{date('Y')}}
+</footer>
 </div>
  <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('scripts')
+
 </body>
 </html>

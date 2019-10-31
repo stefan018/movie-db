@@ -10648,6 +10648,7 @@ a.text-dark:focus {
   }
 }
 
+/* Custom styling */
 body {
   font-size: 1rem;
 }
@@ -10668,6 +10669,7 @@ body {
   color: #292929;
   background-color: #ffdc5d;
   border-color: #ffdc5d;
+  margin-left: 5px;
 }
 
 .carousel-caption {
@@ -10693,5 +10695,161 @@ body {
 #casts-holder input[type=text] {
   margin-right: 10px;
   margin-bottom: 10px;
+}
+
+.movie-db-btn {
+	background-color: #ffdc5d;
+    font-weight: 600;
+	border: 1px solid #292929;
+}
+.comments {
+	padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+    border: 1px solid #000;
+}
+
+.cover-holder img {
+	width: 100%;
+}
+
+.upcoming-section {
+	text-align: center;
+	margin-top: 40px;
+}
+
+.info-holder {
+	position: relative;
+}
+
+.release-date {
+	position: absolute;
+    top: -25px;
+    left: 87px;
+    background-color: #292929;
+    color: #ffdc5d;
+    padding: 0 10px;
+    border-radius: 5px;
+}
+
+p.title {
+	font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.genre span a{
+	color: #007eff;
+	margin-right: 5px;
+}
+
+.genre {
+	text-align: left;
+}
+
+footer {
+	padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+    background-color: #292929;
+    color: #ffdc5d;
+}
+
+.pagination nav {
+	margin: auto;
+}
+
+.genre-movies .genre {
+	display: inline-block;
+	margin-left: 30px;
+}
+
+.genre-movies .row {
+	margin-bottom: 20px;
+}
+
+.description {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.single img {
+	width: 100%;
+}
+
+.single-body {
+	text-align: center;
+}
+
+.single-body h3 {
+	margin-top: 20px;
+	color: #3490dc;
+	font-weight: 600;
+}
+
+.single-info {
+	color:#3490dc;
+	margin-bottom: 20px;
+}
+
+.single-genre:before {
+	content: "|";
+	margin-left: 5px;
+	margin-right: 10px;
+}
+
+.single-cast {
+	text-align: left;
+}
+.single-screenplay {
+	text-align: left;
+}
+.single {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.single-bio {
+	margin-top: 20px;
+}
+
+.single-bio p {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.other-info p {
+	margin-bottom: 0;
+}
+
+.single-delete {
+	position: relative;
+    top: -47px;
+    left: 88px;
+}
+
+main form {
+	padding-bottom: 10px;
+}
+
+.movie-db-btn:hover {
+	background-color: #f5c92a;
+}
+
+.btn-head-search:hover {
+	background-color: #f5c92a;
+}
+
+a.nav-link:hover {
+	color: #f5c92a;
+}
+
+.title-holder {
+	position: relative;
+}
+
+.create-btn {
+	position: absolute;
+	right: 35px;
+	top: 5px;
 }
 

@@ -44,4 +44,14 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
+    public function ratings()
+    {
+        return $this->belongsToMany('App\Rating', 'rateables');
+    }
+
 }

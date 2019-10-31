@@ -48,7 +48,8 @@ class StoreMovieRequest extends FormRequest
                 'image',
                 'mimes:jpeg,png,jpg,gif,svg',
                 'max:2048',
-                'nullable'
+                'nullable',
+                'avatar' => 'dimensions:min_width=350,min_height=520'
             ]
         ];
     }

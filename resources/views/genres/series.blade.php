@@ -2,13 +2,8 @@
 
 @section('content')
 
-<div class="series">
-	<div class="title-holder">
-	<h2>Series</h2>
-	@if(Auth::check() && auth()->user()->isAdmin())
-		<a class="create-btn btn movie-db-btn" href="{{route('series.create')}}">Add a serie</a>
-	@endif
-	</div>
+<div class="genre-series">
+	<h2>{{$genre->name}} Series</h2>
 	@foreach($series as $serie)
 	<div class="row">
 		<div class="col-md-3">	

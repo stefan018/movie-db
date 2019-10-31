@@ -18,7 +18,6 @@ class CreateSeriesTable extends Migration
             $table->string('title', 100);
             $table->text('description');
             $table->smallInteger('duration');
-            $table->float('rating', 2, 1)->nullable();
             $table->date('release_date');
             $table->date('premiere')->nullable();
             $table->tinyInteger('seasons');

@@ -42,7 +42,7 @@
 			@endforeach
 		</div>
 		<div id="casts-holder">
-			<button type="button" onclick="addCast()">Add Cast</button>
+			<button class="btn movie-db-btn" type="button" onclick="addCast()">Add Cast</button>
 		</div>
 		<button type="submit" class="btn btn-primary">Submit</button>
 	</form>

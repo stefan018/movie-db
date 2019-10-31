@@ -55,6 +55,13 @@ class StoreSerieRequest extends FormRequest
             'episodes_per_season' => [
                 'required',
                 'numeric'
+            ],
+            'cover' => [
+                'image',
+                'mimes:jpeg,png,jpg,gif,svg',
+                'max:2048',
+                'nullable',
+                'avatar' => 'dimensions:min_width=350,min_height=520'
             ]
         ];
     }

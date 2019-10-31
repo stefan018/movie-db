@@ -20,6 +20,26 @@ class Serie extends Model
 
     public function genres()
     {
-        return $this->belongsToMany('App\Genre')->withTimestamps();
+        return $this->belongsToMany('App\Genre');
+    }
+
+    public function comments()
+    {
+        return $this->morphMany('App\Comment', 'commentable');
+    }
+
+    public function ratings()
+    {
+        return $this->morphToMany('App\Rating', 'rateable');
+    }
+
+    public function cast()
+    {
+        return $this->belongsToMany('App\Cast');
+    }
+
+    public function getCoverAttribute($cover)
+    {
+        return asset('/images/uploads') . '/' . $cover;
     }
 }

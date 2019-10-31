@@ -2,13 +2,8 @@
 
 @section('content')
 
-<div class="movies">
-	<div class="title-holder">
-	<h2>Movies</h2>
-	@if(Auth::check() && auth()->user()->isAdmin())
-	<a class="create-btn btn movie-db-btn" href="{{route('movies.create')}}">Add a movie</a>
-	@endif
-	</div>
+<div class="genre-movies">
+	<h2>{{$genre->name}} Movies</h2>
 	@foreach($movies as $movie)
 	<div class="row">
 		<div class="col-md-3">	

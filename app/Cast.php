@@ -16,5 +16,20 @@ class Cast extends Model
     	'birth_place', 
     	'photo'
     ];
-    
+	
+	public function movies()
+	{
+		return $this->belongsToMany('App\Movie');
+	}
+
+    public function series()
+    {
+        return $this->belongsToMany('App\Serie');
+    }
+
+    public function getPhotoAttribute($photo)
+    {
+        return asset('/images/uploads') . '/' . $photo;
+    }
+
 }
