@@ -28,11 +28,8 @@ Auth::routes();
 
 Route::get('/search/general', 'SearchController@search')->name('search');
 
-Route::post('/comments', 'CommentsController@store')->name('comments.store');
-Route::post('/comments/reply/{comment}', 'CommentRepliesController@store')->name('commentReplies.store');
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('/ratings/{id}', 'RatingsController@store')->name('rating.store');
-Route::patch('/ratings/{id}', 'RatingsController@update')->name('rating.update');
 
